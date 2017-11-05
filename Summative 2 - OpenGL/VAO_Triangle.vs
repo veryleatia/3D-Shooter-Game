@@ -20,6 +20,7 @@ uniform mat4 proj;
 
 void main(void)
 {
+
 	gl_Position = proj * view * model * vec4(position,  1.0);
 	//gl_Position= transform * vec4(position, 1.0);
 	//gl_Position = vec4(position.x, position.y, position.z, 1.0);

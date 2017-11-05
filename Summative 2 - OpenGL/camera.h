@@ -2,56 +2,117 @@
 
 #include "Dependencies\glew\glew.h"
 #include "Dependencies\freeglut\freeglut.h"
-#include <iostream>
-
+#include "Dependencies\soil\SOIL.h"
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm\gtc\type_ptr.hpp"
 
-
-class CCamera
+class cCamera
 {
-	glm::mat4 ProjMatrix;
-	glm::mat4 ViewMatrix;
-
-	GLfloat x;
-	GLfloat y;
-
-	float cameraTime = 0.0f;
-
 public:
 
-	GLfloat currentX;
-
-	void CCamera::CreateCamera(GLfloat _WindowWidth, GLfloat _WindowHeight)
+	void setEye(float _x, float _y, float _z)
 	{
-		
-		ProjMatrix = glm::perspective(1.0f, (float)_WindowWidth / (float)_WindowHeight, 0.1f, 100.0f);
+		eye = glm::vec3(_x, _y, _z);
 	}
 
-	void CCamera::CreateCamera(GLfloat _WindowWidth, GLfloat _WindowHeight, GLfloat _posX, GLfloat _posY, GLuint _program)
+	void setCenter(float _x, float _y, float _z)
 	{
+		center = glm::vec3(_x, _y, _z);
 
-		ProjMatrix = glm::ortho((_posX - 800.0f / 2.0f) + 300, (_posX + 800.0f / 2.0f) + 300, 0.0f, _WindowHeight, 0.0f, 100.0f);
-		x = (_posX - 800.0f / 2.0f) + 300;
-		currentX = x;
 	}
 
-	void CCamera::UpdateCamera(GLfloat _WindowWidth, GLfloat _WindowHeight, GLfloat _posX, GLfloat _posY)
+	void setUp(float _x, float _y, float _z)
 	{
-		//moves camera with keyboard controls??
+		up = glm::vec3(_x, _y, _z);
+
 	}
 
-	glm::mat4 CCamera::GetViewMatrix()
+	void setProjectionMatrix(float _fov, int _width, int _height, float _zNear, float _zFar)
 	{
-		return ViewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, 1.0f, 0.0f));
+		projectionMatrix = glm::perspective(_fov, (GLfloat)_width / (GLfloat)_height, _zNear, _zFar);
+
+	}
+	void setViewMatrix(glm::vec3 _Eye, glm::vec3 _Center, glm::vec3 _Up)
+	{
+		viewMatrix = glm::lookAt(_Eye, _Center, _Up);
+
 	}
 
-	glm::mat4 CCamera::GetProjMatrix()
+	void setEyeX(float _x)
 	{
-		return ProjMatrix;
+		eye.x = _x;
 	}
 
+	void setCenterX(float _x)
+	{
+		center.x = _x;
+	}
+
+	void setEyeY(float _y)
+	{
+		eye.y = _y;
+	}
+
+	void setCenterY(float _y)
+	{
+		center.y = _y;
+	}
+
+	glm::vec3 getEye() 
+	{
+		return (eye);
+	}
+
+	glm::vec3 getCenter() 
+	{
+		return (center);
+	}
+
+	glm::vec3 getUp() 
+	{
+		return (up);
+	}
+
+	glm::mat4 getProjectionMatrix() 
+	{
+		return (projectionMatrix);
+	}
+
+	glm::mat4 getViewMatrix()
+	{
+		return (viewMatrix);
+	}
+
+	float getEyeX() 
+	{
+		return (eye.x);
+	}
+
+	float getCenterX() 
+	{
+		return (center.x);
+	}
+
+	float getEyeY() 
+	{
+		return (eye.y);
+	}
+
+	float getCenterY() 
+	{
+		return (center.y);
+	}
+
+	void update() 
+	{
+		viewMatrix = glm::lookAt(eye, center, up);
+	}
+
+private:
+	glm::vec3 eye;
+	glm::vec3 center;
+	glm::vec3 up;
+	glm::mat4 projectionMatrix;
+	glm::mat4 viewMatrix;
 };

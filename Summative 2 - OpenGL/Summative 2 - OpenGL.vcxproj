@@ -135,13 +135,22 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
-    <ClCompile Include="shape.cpp" />
+    <ClCompile Include="sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="enemies.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="powerup.h" />
+    <ClInclude Include="sceneManager.h" />
     <ClInclude Include="ShaderLoader.h" />
-    <ClInclude Include="shape.h" />
+    <ClInclude Include="sprite.h" />
     <ClInclude Include="utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VAO_Triangle.fs" />
+    <None Include="VAO_Triangle.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
